@@ -1,59 +1,128 @@
-// First, we import the function from parkService.mjs so we can get the park data
+// 1. Get the park data
 import { getParkData } from "./parkService.mjs";
 
-// Call the function and save the returned park object into a variable
+// Grab the data
 const parkData = getParkData();
 
 // ------------------------------
-// 1. Update the disclaimer link at the top
+// Disclaimer link
 // ------------------------------
-// Select the <a> inside the disclaimer paragraph
 const disclaimer = document.querySelector(".disclaimer > a");
-
-// Set the link to the official park website
 disclaimer.href = parkData.url;
-
-// Update the text inside the link to show the park's full name
 disclaimer.innerHTML = parkData.fullName;
 
 // ------------------------------
-// 2. Update the page title
+// Page title
 // ------------------------------
-// This changes the <title> in the browser tab dynamically
 document.title = parkData.fullName;
 
 // ------------------------------
-// 3. Update the hero image for the park
+// Hero banner
 // ------------------------------
-// Select the hero section (where the big park image goes)
-const hero = document.querySelector("#park-header");
+const heroImg = document.querySelector(".hero-banner > img");
+heroImg.src = parkData.images[0].url;
 
-// Instead of the <img>, we are using the background of the hero section
-hero.style.backgroundImage = `url(${parkData.images[0].url})`;
-
-// Make sure the background image covers the section and stays centered
-hero.style.backgroundSize = "cover";
-hero.style.backgroundPosition = "center";
-
-// ------------------------------
-// 4. Update hero content: name, designation, states
-// ------------------------------
-// Function to build the HTML for the hero banner dynamically
 function parkInfoTemplate(info) {
   return `
-    <!-- Park title -->
-    <a href="/" class="hero-banner__title">${info.fullName}</a>
-    <!-- Park subtitle with designation and states -->
+    <a href="${info.url}" class="hero-banner__title">${info.fullName}</a>
     <p class="hero-banner__subtitle">
       <span>${info.designation}</span>
       <span>${info.states}</span>
     </p>
   `;
 }
+document.querySelector(".hero-banner__content").innerHTML =
+  parkInfoTemplate(parkData);
 
-// Insert the hero content into the hero section
-// 'beforeend' means it will go inside the hero-banner__content div
-const heroContent = document.querySelector(".hero-banner__content");
-heroContent.insertAdjacentHTML("beforeend", parkInfoTemplate(parkData));
+// ------------------------------
+// Intro section
+// ------------------------------
+function setParkIntro(data) {
+  const introEl = document.querySelector(".intro");
+  introEl.innerHTML = `
+    <h1>${data.fullName}</h1>
+    <p>${data.description}</p>
+  `;
+}
+setParkIntro(parkData);
 
-//
+// ------------------------------
+// Info section (media cards)
+// ------------------------------
+function mediaCardTemplate(info) {
+  return `
+    <div class="media-card">
+      <a href="${info.link}">
+        <img src="${info.image}" alt="${info.name}" class="media-card__img">
+        <h3 class="media-card__title">${info.name}</h3>
+      </a>
+      <p>${info.description}</p>
+    </div>
+  `;
+}
+
+function setParkInfoLinks(data) {
+  const infoEl = document.querySelector(".info");
+  const html = data.map(mediaCardTemplate);
+  infoEl.innerHTML = html.join("");
+}
+
+const parkInfoLinks = [
+  {
+    name: "Current Conditions &#x203A;",
+    link: "conditions.html",
+    image: parkData.images[2].url,
+    description:
+      "See what conditions to expect in the park before leaving on your trip!"
+  },
+  {
+    name: "Fees and Passes &#x203A;",
+    link: "fees.html",
+    image: parkData.images[3].url,
+    description: "Learn about the fees and passes that are available."
+  },
+  {
+    name: "Visitor Centers &#x203A;",
+    link: "visitor_centers.html",
+    image: parkData.images[9].url,
+    description: "Learn about the visitor centers in the park."
+  }
+];
+
+setParkInfoLinks(parkInfoLinks);
+
+// ------------------------------
+// Footer
+// ------------------------------
+function getMailingAddress(addresses) {
+  return addresses.find((address) => address.type === "Mailing");
+}
+
+function getVoicePhone(numbers) {
+  const voice = numbers.find((number) => number.type === "Voice");
+  return voice.phoneNumber;
+}
+
+function footerTemplate(info) {
+  const mailing = getMailingAddress(info.addresses);
+  const voice = getVoicePhone(info.contacts.phoneNumbers);
+
+  return `
+    <section class="contact">
+      <h3>Contact Info</h3>
+      <h4>Mailing Address:</h4>
+      <div>
+        <p>${mailing.line1}</p>
+        <p>${mailing.city}, ${mailing.stateCode} ${mailing.postalCode}</p>
+      </div>
+      <h4>Phone:</h4>
+      <p>${voice}</p>
+    </section>
+  `;
+}
+
+function setFooter(data) {
+  const footerEl = document.querySelector("#park-footer");
+  footerEl.innerHTML = footerTemplate(data);
+}
+setFooter(parkData);
