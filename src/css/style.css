@@ -41,52 +41,14 @@
   --bs-danger: #dc3545;
   --bs-light: #f8f9fa;
   --bs-dark: #212529;
-  --bs-primary-rgb: 13, 110, 253;
-  --bs-secondary-rgb: 108, 117, 125;
-  --bs-success-rgb: 75, 94, 38;
-  --bs-info-rgb: 13, 202, 240;
-  --bs-warning-rgb: 255, 193, 7;
-  --bs-danger-rgb: 220, 53, 69;
-  --bs-light-rgb: 248, 249, 250;
-  --bs-dark-rgb: 33, 37, 41;
-  --bs-white-rgb: 255, 255, 255;
-  --bs-black-rgb: 0, 0, 0;
-  --bs-body-color-rgb: 33, 37, 41;
-  --bs-body-bg-rgb: 255, 255, 255;
-  --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --bs-font-serif: "Times New Roman", Times, serif;
-  --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-  --bs-gradient: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.15),
-    rgba(255, 255, 255, 0)
-  );
-  --bs-body-font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-  --bs-body-font-size: 1rem;
-  --bs-body-font-weight: 400;
-  --bs-body-line-height: 1.75;
-  --bs-body-color: #212529;
-  --bs-body-bg: #fff;
-  --bs-border-width: 1px;
-  --bs-border-style: solid;
-  --bs-border-color: #dee2e6;
-  --bs-border-color-translucent: rgba(0, 0, 0, 0.175);
-  --bs-border-radius: 0.375rem;
-  --bs-border-radius-sm: 0.25rem;
-  --bs-border-radius-lg: 0.5rem;
-  --bs-border-radius-xl: 1rem;
-  --bs-border-radius-2xl: 2rem;
-  --bs-border-radius-pill: 50rem;
   --bs-link-color: #005999;
   --bs-link-hover-color: #003e6b;
-  --bs-code-color: #d63384;
-  --bs-highlight-bg: #fff3cd;
+  --bs-body-font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  --bs-font-serif: "Times New Roman", Times, serif;
+  --bs-border-radius: 0.375rem;
 }
 
-/* Global styles */
+/* GLOBAL STYLES */
 * {
   box-sizing: border-box;
 }
@@ -106,7 +68,7 @@ a:hover {
   color: var(--bs-link-hover-color);
 }
 
-/* Skip links */
+/* SKIP LINKS */
 .skip-links ul {
   list-style-type: none;
   margin: 0;
@@ -124,7 +86,7 @@ a:hover {
   z-index: 9999;
 }
 
-/* Title & logo */
+/* HEADER & LOGO */
 .site-title {
   display: flex;
   align-items: center;
@@ -143,7 +105,7 @@ a:hover {
   border-right: 13px solid transparent;
 }
 
-/* Global header */
+/* GLOBAL HEADER */
 .global-header {
   background-color: var(--bs-black);
   color: white;
@@ -182,7 +144,7 @@ a:hover {
   border-left: 1px solid var(--bs-grey-5);
 }
 
-/* Hero banner */
+/* HERO BANNER */
 .hero-banner {
   display: grid;
   grid-template-columns: 1fr;
@@ -213,7 +175,7 @@ a:hover {
   font-size: 0.8rem;
 }
 
-/* Park nav */
+/* PARK NAVIGATION */
 .park-nav > ul {
   list-style: none;
   padding-left: 0;
@@ -238,7 +200,7 @@ a:hover {
   height: 24px;
 }
 
-/* Intro & Info */
+/* INTRO & INFO */
 .intro {
   padding: 1em;
 }
@@ -264,7 +226,7 @@ a:hover {
   }
 }
 
-/* Media cards */
+/* MEDIA CARDS */
 .media-card a {
   text-decoration: none;
   color: var(--bs-black);
@@ -281,7 +243,7 @@ a:hover {
   color: var(--bs-grey-2);
 }
 
-/* Footer */
+/* FOOTER */
 .park-footer {
   background-image: url("../images/topo_pattern.png");
   padding: 1.5rem;
@@ -304,7 +266,7 @@ a:hover {
   margin: 0.5rem 0;
 }
 
-/* Utility */
+/* UTILITY */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -319,4 +281,48 @@ a:hover {
 }
 .disclaimer {
   padding: 0 1em;
+}
+
+/* === NEW SECTIONS: Weather, Directions, Gallery === */
+.weather, .directions, .gallery {
+  padding: 1.5em;
+  margin: 1em 0;
+  border-radius: var(--bs-border-radius);
+}
+.weather { background-color: var(--bs-light-green); }
+.directions { background-color: var(--bs-pampas); }
+.weather h2, .directions h2, .gallery h2 {
+  border-bottom: 2px solid var(--bs-chathams-blue-2);
+  padding-bottom: 0.3em;
+  margin-bottom: 1em;
+  font-family: var(--bs-font-serif);
+  font-size: 1.5em;
+}
+.weather p, .directions p { font-size: 1rem; line-height: 1.6; color: var(--bs-black); }
+.directions a { color: var(--bs-chathams-blue-2); text-decoration: underline; }
+.directions a:hover { color: var(--bs-chathams-blue-3); }
+
+/* GALLERY */
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1em;
+}
+@media screen and (min-width: 640px) {
+  .gallery { grid-template-columns: repeat(2, 1fr); }
+}
+@media screen and (min-width: 960px) {
+  .gallery { grid-template-columns: repeat(3, 1fr); }
+}
+.gallery img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: var(--bs-border-radius);
+}
+.gallery figcaption {
+  font-size: 0.8rem;
+  color: var(--bs-grey-2);
+  text-align: center;
+  margin-top: 0.3em;
 }

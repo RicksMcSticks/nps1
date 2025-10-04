@@ -3,109 +3,94 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- Page title will get updated dynamically with JS -->
   <title>[Park Name]</title>
-  
-  <!-- Link to our CSS file -->
   <link rel="stylesheet" href="css/style.css">
-  
-  <!-- Link to our JS file, using ES modules -->
-  <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/main.js" defer></script>
 </head>
 <body>
-  <!-- DISCLAIMER: This is just for practice, not the real NPS site -->
+  <!-- DISCLAIMER -->
   <p class="disclaimer">
     This is not a real NPS website. It is an educational exercise. If you accidentally came here, visit
-    <a href="parkUrl">[park name]</a> <!-- This link will get updated dynamically -->
+    <a href="parkUrl">[park name]</a>
   </p>
 
-  <!-- SKIP LINKS: Helps screen readers and keyboard users jump around quickly -->
+  <!-- SKIP LINKS -->
   <div class="skip-links" role="navigation" aria-label="Shortcut links">
     <ul>
-      <li><a href="#global-nav-toggle" aria-label="Skip to global NPS navigation">Skip to global NPS navigation</a></li>
-      <li><a href="#local-nav" aria-label="Skip to this park navigation">Skip to this park navigation</a></li>
-      <li><a href="#main" aria-label="Skip to the main content">Skip to the main content</a></li>
-      <li><a href="#park-footer" aria-label="Skip to park information section">Skip to park information section</a></li>
+      <li><a href="#global-nav-toggle">Skip to global NPS navigation</a></li>
+      <li><a href="#local-nav">Skip to this park navigation</a></li>
+      <li><a href="#main">Skip to the main content</a></li>
+      <li><a href="#park-footer">Skip to park information section</a></li>
     </ul>
   </div>
 
-  <!-- HEADER: contains global NPS header and park-specific header -->
+  <!-- HEADER -->
   <header>
-    <!-- GLOBAL HEADER: top bar with logo and menu/search -->
     <section class="global-header">
-      <!-- Logo and main site title -->
       <a href="index.html" class="site-title">
         <span class="logo" role="presentation"></span>
         <h1>National Park Service</h1>
       </a>
-
-      <!-- Right side of header: search icon and menu button -->
       <div class="global-header__right">
-        <!-- Search button -->
         <a class="search-icon" href="#park-footer">
           <svg class="icon">
-            <use xlink:href="/images/sprite.symbol.svg#search"></use>
+            <use xlink:href="images/sprite.symbol.svg#search"></use>
           </svg>
           <span class="visually-hidden">Search</span>
         </a>
-
-        <!-- Menu toggle button for mobile -->
         <button id="global-nav-toggle">
           <svg class="icon">
-            <use xlink:href="/images/sprite.symbol.svg#menu"></use>
+            <use xlink:href="images/sprite.symbol.svg#menu"></use>
           </svg>
           <span class="visually-hidden">Open Menu</span>
         </button>
       </div>
     </section>
 
-    <!-- PARK HEADER: hero image and navigation for the park -->
     <section id="park-header">
       <div class="hero-banner">
-        <!-- This image will get updated dynamically via JS -->
         <img src="" alt="">
-        <div class="hero-banner__content">
-          <!-- Park name, designation, and states will go here dynamically -->
-        </div>
+        <div class="hero-banner__content"></div>
       </div>
-
-      <!-- PARK NAVIGATION: quick links for this park -->
       <nav class="park-nav">
         <ul>
-          <!-- Each li is a menu item with an icon and text -->
           <li>
-            <a href="#"><span>Info</span>
+            <a href="#">
+              <span>Info</span>
               <svg class="icon" role="presentation" focusable="false">
-                <use xlink:href="/images/sprite.symbol.svg#info"></use>
+                <use xlink:href="images/sprite.symbol.svg#info"></use>
               </svg>
             </a>
           </li>
           <li>
-            <a href="#"><span>Alerts</span>
+            <a href="#">
+              <span>Alerts</span>
               <svg class="icon" role="presentation" focusable="false">
-                <use xlink:href="/images/sprite.symbol.svg#alert"></use>
+                <use xlink:href="images/sprite.symbol.svg#alert"></use>
               </svg>
             </a>
           </li>
           <li>
-            <a href="#"><span>Maps</span>
+            <a href="#">
+              <span>Maps</span>
               <svg class="icon" role="presentation" focusable="false">
-                <use xlink:href="/images/sprite.symbol.svg#location"></use>
+                <use xlink:href="images/sprite.symbol.svg#location"></use>
               </svg>
             </a>
           </li>
           <li>
-            <a href="#"><span>Calendar</span>
+            <a href="#">
+              <span>Calendar</span>
               <svg class="icon" role="presentation" focusable="false">
-                <use xlink:href="/images/sprite.symbol.svg#calendar"></use>
+                <use xlink:href="images/sprite.symbol.svg#calendar"></use>
               </svg>
             </a>
           </li>
           <li>
-            <a href="#"><span>Fees</span>
+            <a href="#">
+              <span>Fees</span>
               <svg class="icon" role="presentation" focusable="false">
-                <use xlink:href="/images/sprite.symbol.svg#fee-22"></use>
+                <use xlink:href="images/sprite.symbol.svg#fee-22"></use>
               </svg>
             </a>
           </li>
@@ -116,14 +101,23 @@
 
   <!-- MAIN CONTENT -->
   <main id="main">
-    <!-- Intro section: park name + description -->
+    <!-- Intro section -->
     <section class="intro"></section>
 
-    <!-- Info section: media cards (Current Conditions, Fees, Visitor Centers) -->
+    <!-- Info section: media cards -->
     <section class="info"></section>
+
+    <!-- Weather section -->
+    <section class="weather"></section>
+
+    <!-- Directions section -->
+    <section class="directions"></section>
+
+    <!-- Gallery section -->
+    <section class="gallery"></section>
   </main>
 
-  <!-- FOOTER: park info goes here dynamically -->
+  <!-- FOOTER -->
   <footer id="park-footer"></footer>
 </body>
 </html>

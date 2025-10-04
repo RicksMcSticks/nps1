@@ -1,113 +1,82 @@
-// 1. Get the park data
-import { getParkData } from "./parkService.mjs";
+import { getParkDataStatic, getParkData } from "./parkService.mjs";
 
-// Grab the data
-const parkData = getParkData();
+async function initPage() {
+  // Try API first, fallback to static
+  const parkData = await getParkData().catch(() => getParkDataStatic());
 
-// ------------------------------
-// Disclaimer link
-// ------------------------------
-const disclaimer = document.querySelector(".disclaimer > a");
-disclaimer.href = parkData.url;
-disclaimer.innerHTML = parkData.fullName;
+  // DISCLAIMER
+  const disclaimer = document.querySelector(".disclaimer > a");
+  disclaimer.href = parkData.url;
+  disclaimer.textContent = parkData.fullName;
 
-// ------------------------------
-// Page title
-// ------------------------------
-document.title = parkData.fullName;
+  // PAGE TITLE
+  document.title = parkData.fullName;
 
-// ------------------------------
-// Hero banner
-// ------------------------------
-const heroImg = document.querySelector(".hero-banner > img");
-heroImg.src = parkData.images[0].url;
+  // HERO
+  const heroImg = document.querySelector(".hero-banner > img");
+  heroImg.src = parkData.images[0].url;
 
-function parkInfoTemplate(info) {
-  return `
-    <a href="${info.url}" class="hero-banner__title">${info.fullName}</a>
+  const heroContent = document.querySelector(".hero-banner__content");
+  heroContent.innerHTML = `
+    <a href="${parkData.url}" class="hero-banner__title">${parkData.fullName}</a>
     <p class="hero-banner__subtitle">
-      <span>${info.designation}</span>
-      <span>${info.states}</span>
+      <span>${parkData.designation}</span>
+      <span>${parkData.states}</span>
     </p>
   `;
-}
-document.querySelector(".hero-banner__content").innerHTML =
-  parkInfoTemplate(parkData);
 
-// ------------------------------
-// Intro section
-// ------------------------------
-function setParkIntro(data) {
-  const introEl = document.querySelector(".intro");
-  introEl.innerHTML = `
-    <h1>${data.fullName}</h1>
-    <p>${data.description}</p>
+  // INTRO
+  document.querySelector(".intro").innerHTML = `
+    <h1>${parkData.fullName}</h1>
+    <p>${parkData.description}</p>
   `;
-}
-setParkIntro(parkData);
 
-// ------------------------------
-// Info section (media cards)
-// ------------------------------
-function mediaCardTemplate(info) {
-  return `
-    <div class="media-card">
-      <a href="${info.link}">
-        <img src="${info.image}" alt="${info.name}" class="media-card__img">
-        <h3 class="media-card__title">${info.name}</h3>
-      </a>
-      <p>${info.description}</p>
-    </div>
-  `;
-}
+  // INFO CARDS
+  const infoLinks = [
+    { name: "Current Conditions ›", link: "conditions.html", image: parkData.images[2]?.url || "", description: "See what conditions to expect in the park before leaving on your trip!" },
+    { name: "Fees and Passes ›", link: "fees.html", image: parkData.images[3]?.url || "", description: "Learn about the fees and passes that are available." },
+    { name: "Visitor Centers ›", link: "visitor_centers.html", image: parkData.images[9]?.url || "", description: "Learn about the visitor centers in the park." }
+  ];
 
-function setParkInfoLinks(data) {
-  const infoEl = document.querySelector(".info");
-  const html = data.map(mediaCardTemplate);
-  infoEl.innerHTML = html.join("");
-}
-
-const parkInfoLinks = [
-  {
-    name: "Current Conditions &#x203A;",
-    link: "conditions.html",
-    image: parkData.images[2].url,
-    description:
-      "See what conditions to expect in the park before leaving on your trip!"
-  },
-  {
-    name: "Fees and Passes &#x203A;",
-    link: "fees.html",
-    image: parkData.images[3].url,
-    description: "Learn about the fees and passes that are available."
-  },
-  {
-    name: "Visitor Centers &#x203A;",
-    link: "visitor_centers.html",
-    image: parkData.images[9].url,
-    description: "Learn about the visitor centers in the park."
+  function mediaCardTemplate(info) {
+    return `
+      <div class="media-card">
+        <a href="${info.link}">
+          <img src="${info.image}" alt="${info.name}" class="media-card__img">
+          <h3 class="media-card__title">${info.name}</h3>
+        </a>
+        <p>${info.description}</p>
+      </div>
+    `;
   }
-];
+  document.querySelector(".info").innerHTML = infoLinks.map(mediaCardTemplate).join("");
 
-setParkInfoLinks(parkInfoLinks);
+  // WEATHER
+  document.querySelector(".weather").innerHTML = `
+    <h2>Weather</h2>
+    <p>${parkData.weatherInfo}</p>
+  `;
 
-// ------------------------------
-// Footer
-// ------------------------------
-function getMailingAddress(addresses) {
-  return addresses.find((address) => address.type === "Mailing");
-}
+  // DIRECTIONS
+  document.querySelector(".directions").innerHTML = `
+    <h2>Directions</h2>
+    <p>${parkData.directionsInfo} <a href="${parkData.directionsUrl}" target="_blank">More directions</a></p>
+  `;
 
-function getVoicePhone(numbers) {
-  const voice = numbers.find((number) => number.type === "Voice");
-  return voice.phoneNumber;
-}
+  // GALLERY
+  const galleryTemplate = (img) => `
+    <figure>
+      <img src="${img.url}" alt="${img.altText}">
+      <figcaption>${img.caption}</figcaption>
+    </figure>
+  `;
+  document.querySelector(".gallery").innerHTML = parkData.images.map(galleryTemplate).join("");
 
-function footerTemplate(info) {
-  const mailing = getMailingAddress(info.addresses);
-  const voice = getVoicePhone(info.contacts.phoneNumbers);
+  // FOOTER
+  const mailing = parkData.addresses.find(a => a.type === "Mailing");
+  const voice = parkData.contacts.phoneNumbers.find(p => p.type === "Voice")?.phoneNumber || "N/A";
 
-  return `
+  document.querySelector("#park-footer").innerHTML = `
     <section class="contact">
       <h3>Contact Info</h3>
       <h4>Mailing Address:</h4>
@@ -121,8 +90,4 @@ function footerTemplate(info) {
   `;
 }
 
-function setFooter(data) {
-  const footerEl = document.querySelector("#park-footer");
-  footerEl.innerHTML = footerTemplate(data);
-}
-setFooter(parkData);
+initPage();
