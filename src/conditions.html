@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>[Park Name]</title>
+  <title>[Park Name] - Current Conditions</title>
   <link rel="stylesheet" href="css/style.css">
-  <script type="module" src="js/main.js" defer></script>
+  <script type="module" src="js/conditions.js" defer></script>
 </head>
 <body>
   <!-- DISCLAIMER -->
@@ -50,9 +50,7 @@
     <section id="park-header">
       <div class="hero-banner">
         <img src="" alt="">
-        <div class="hero-banner__content">
-          <!-- JS will insert park name, designation, states -->
-        </div>
+        <div class="hero-banner__content"></div>
       </div>
       <nav class="park-nav" id="local-nav">
         <ul>
@@ -103,20 +101,31 @@
 
   <!-- MAIN CONTENT -->
   <main id="main">
-    <!-- Intro -->
-    <section class="intro"></section>
+    <h1>Current Conditions</h1>
 
-    <!-- Info cards -->
-    <section class="info"></section>
+    <!-- Alerts Section -->
+    <section class="alerts">
+      <h2>Alerts</h2>
+      <ul></ul>
+    </section>
 
-    <!-- Weather -->
-    <section class="weather"></section>
+    <!-- Visitor Services Section -->
+    <section class="visitor">
+      <h2>Visitor Services</h2>
+      <details name="current-details">
+        <summary>Visitor Centers</summary>
+        <ul></ul>
+      </details>
+    </section>
 
-    <!-- Directions -->
-    <section class="directions"></section>
-
-    <!-- Gallery -->
-    <section class="gallery"></section>
+    <!-- Activities Section -->
+    <section class="activities">
+      <h2>Activities</h2>
+      <details name="current-details">
+        <summary>All Activities</summary>
+        <ul></ul>
+      </details>
+    </section>
   </main>
 
   <!-- FOOTER -->
