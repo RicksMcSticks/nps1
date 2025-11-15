@@ -2,35 +2,43 @@
 import "../css/style.css";       // Global CSS
 import "../css/conditions.css";  // Page-specific CSS
 
-import { getParkData, getParkAlerts, getVisitorCenterData } from "./parkService.mjs";
+import { getParkData, getParkAlerts, getParkVisitorCenters } from "./parkService.mjs";
 import { alertTemplate, visitorCenterTemplate, activityTemplate } from "./templates.mjs";
 import setHeaderFooter from "./setHeaderFooter.mjs";
 
-// Insert alerts into the DOM
+// -----------------------------
+// Alerts
+// -----------------------------
 function setAlerts(alerts) {
   const container = document.querySelector(".alerts > ul");
   container.innerHTML = "";
   const html = alerts.map(alertTemplate);
-  container.insertAdjacentHTML("beforeend", html.join(""));
+  container.insertAdjacentHTML("afterbegin", html.join(""));
 }
 
-// Insert visitor centers into the DOM
+// -----------------------------
+// Visitor Centers
+// -----------------------------
 function setVisitorCenters(centers) {
   const container = document.querySelector(".visitor details ul");
   container.innerHTML = "";
   const html = centers.map(visitorCenterTemplate);
-  container.insertAdjacentHTML("beforeend", html.join(""));
+  container.insertAdjacentHTML("afterbegin", html.join(""));
 }
 
-// Insert activities into the DOM
+// -----------------------------
+// Activities
+// -----------------------------
 function setActivities(activities) {
   const container = document.querySelector(".activities details ul");
   container.innerHTML = "";
   const html = activities.map(activityTemplate);
-  container.insertAdjacentHTML("beforeend", html.join(""));
+  container.insertAdjacentHTML("afterbegin", html.join(""));
 }
 
-// Initialize the page
+// -----------------------------
+// Initialize Page
+// -----------------------------
 async function init() {
   const parkData = await getParkData();
   setHeaderFooter(parkData);
@@ -38,10 +46,10 @@ async function init() {
   const alerts = await getParkAlerts(parkData.parkCode);
   setAlerts(alerts);
 
-  const centers = await getVisitorCenterData(parkData.parkCode);
-  setVisitorCenters(centers);
+  const visitorCenters = await getParkVisitorCenters(parkData.parkCode);
+  setVisitorCenters(visitorCenters);
 
-  setActivities(parkData.activities); // Already in parkData from static/fallback
+  setActivities(parkData.activities); // Already in parkData
 }
 
 init();

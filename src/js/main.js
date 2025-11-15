@@ -1,4 +1,5 @@
-
+import "../css/style.css"; // from instructor (optional, only if using Vite)
+import "../css/home.css"; // optional, can remove if not using
 import { getParkData, getInfoLinks } from "./parkService.mjs";
 import setHeaderFooter from "./setHeaderFooter.mjs";
 import { mediaCardTemplate } from "./templates.mjs";
@@ -22,6 +23,17 @@ function setParkInfoLinks(data) {
 }
 
 // -----------------------------
+// Weather, Directions, Gallery
+// -----------------------------
+function setExtraSections(data) {
+  document.querySelector(".weather").innerHTML = `<h2>Weather</h2><p>${data.weatherInfo}</p>`;
+  document.querySelector(".directions").innerHTML = `<h2>Directions</h2><p>${data.directionsInfo} <a href="${data.directionsUrl}" target="_blank">More directions</a></p>`;
+
+  const galleryTemplate = (img) => `<figure><img src="${img.url}" alt="${img.altText}"><figcaption>${img.caption}</figcaption></figure>`;
+  document.querySelector(".gallery").innerHTML = data.images.map(galleryTemplate).join("");
+}
+
+// -----------------------------
 // Initialize Page
 // -----------------------------
 async function init() {
@@ -31,29 +43,22 @@ async function init() {
   setHeaderFooter(parkData);
   setParkIntro(parkData);
   setParkInfoLinks(infoLinks);
-
-  // WEATHER
-  document.querySelector(".weather").innerHTML = `<h2>Weather</h2><p>${parkData.weatherInfo}</p>`;
-
-  // DIRECTIONS
-  document.querySelector(".directions").innerHTML = `<h2>Directions</h2><p>${parkData.directionsInfo} <a href="${parkData.directionsUrl}" target="_blank">More directions</a></p>`;
-
-  // GALLERY
-  const galleryTemplate = (img) => `<figure><img src="${img.url}" alt="${img.altText}"><figcaption>${img.caption}</figcaption></figure>`;
-  document.querySelector(".gallery").innerHTML = parkData.images.map(galleryTemplate).join("");
+  setExtraSections(parkData);
 }
 
 init();
 
+// -----------------------------
+// Global Navigation Toggle
+// -----------------------------
 function enableNavigation() {
   const menuButton = document.querySelector("#global-nav-toggle");
-  
   menuButton.addEventListener("click", (ev) => {
     let target = ev.target;
     document.querySelector(".global-nav").classList.toggle("show");
-    
-    // Ensure we’re targeting the button
-    if (target.tagName != "BUTTON") {
+
+    // Ensure we’re targeting the button itself
+    if (target.tagName !== "BUTTON") {
       target = target.closest("button");
     }
 
