@@ -3,6 +3,8 @@ import "../css/home.css"; // optional, can remove if not using
 import { getParkData, getInfoLinks } from "./parkService.mjs";
 import setHeaderFooter from "./setHeaderFooter.mjs";
 import { mediaCardTemplate } from "./templates.mjs";
+import enableNavigation from "./navigation.mjs";
+
 
 // -----------------------------
 // Park Intro
@@ -48,25 +50,4 @@ async function init() {
 
 init();
 
-// -----------------------------
-// Global Navigation Toggle
-// -----------------------------
-function enableNavigation() {
-  const menuButton = document.querySelector("#global-nav-toggle");
-  menuButton.addEventListener("click", (ev) => {
-    let target = ev.target;
-    document.querySelector(".global-nav").classList.toggle("show");
-
-    // Ensure we’re targeting the button itself
-    if (target.tagName !== "BUTTON") {
-      target = target.closest("button");
-    }
-
-    // Toggle aria-expanded depending on menu state
-    const isOpen = document.querySelector(".global-nav").classList.contains("show");
-    target.setAttribute("aria-expanded", isOpen);
-  });
-}
-
-// Call the function so it actually runs
 enableNavigation();

@@ -1,6 +1,7 @@
 // conditions.js
 import "../css/style.css";       // Global CSS
 import "../css/conditions.css";  // Page-specific CSS
+import enableNavigation from "./navigation.mjs";
 
 import { getParkData, getParkAlerts, getParkVisitorCenters } from "./parkService.mjs";
 import { alertTemplate, visitorCenterTemplate, activityTemplate } from "./templates.mjs";
@@ -53,3 +54,5 @@ async function init() {
 }
 
 init();
+
+enableNavigation();
