@@ -51,3 +51,15 @@ async function init() {
 init();
 
 enableNavigation();
+
+//nav bar 
+  <button id="">Go to New Page</button>
+  const button = document.getElementById("myButton");
+  button.addEventListener("click", function() {
+    window.location.href = "newpage.html"; // goes to new page
+  });
+
+// <li><a href="#global-nav-toggle">Skip to global NPS navigation</a></li>
+ //     <li><a href="#local-nav">Skip to this park navigation</a></li>
+  //    <li><a href="#main">Skip to the main content</a></li>
+  //    <li><a href="#park-footer"></a>
