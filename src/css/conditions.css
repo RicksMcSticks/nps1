@@ -1,23 +1,21 @@
-/* conditions.css */
-/* ----------------- */
-/* Main page padding  */
+/* current conditions styles */
+
 main {
   padding: 1rem;
 }
 
-/* ----------------- */
-/* Alerts section */
+/* alerts */
+
 .alerts > ul {
   list-style: none;
   padding: 0;
-  margin: 0;
 }
 
 .alert {
+  margin: 0.5rem;
+  padding: 0.5rem 0 0.8rem 0;
   display: flex;
   gap: 1em;
-  padding: 0.5rem 0 0.8rem 0;
-  margin: 0.5rem 0;
   border-bottom: 1px solid var(--bs-grey-3);
 }
 
@@ -27,50 +25,22 @@ main {
 }
 
 .alert p {
-  margin: 0.25rem 0 0 0;
-}
-
-.alert svg {
-  flex: 0 0 auto;
-  width: 30px;
-  height: 30px;
-  margin: 0.25em 0;
-}
-
-/* Alert colors (make sure these variables exist in :root or variables.css) */
-.alert-closure { color: var(--alert-closure); }
-.alert-caution { color: var(--alert-caution); }
-.alert-information { color: var(--alert-information); }
-.alert-danger { color: var(--alert-danger); }
-
-/* ----------------- */
-/* Visitor Centers & Activities sections */
-.visitor > details ul,
-.activities > details ul {
-  list-style: none;
-  padding: 0;
   margin: 0;
 }
 
-.visitor > details li,
-.activities > details li {
+.alert svg {
+  height: 30px;
+  width: 30px;
+  margin: 0.25em;
+  flex: 0 0 auto;
+}
+
+/* visitor styles */
+
+.visitor > details > ul {
+  list-style: none;
+  padding: 0;
+}
+.visitor > details li {
   border-bottom: 1px solid var(--bs-grey-3);
-  padding: 0.5rem 0;
-}
-
-/* Details summary styling */
-details[open] summary::after {
-  content: "▲";
-  float: right;
-}
-
-summary::after {
-  content: "▼";
-  float: right;
-}
-
-summary {
-  cursor: pointer;
-  font-weight: bold;
-  padding: 0.5rem 0;
 }

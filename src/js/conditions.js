@@ -1,58 +1,44 @@
-// conditions.js
-import "../css/style.css";       // Global CSS
-import "../css/conditions.css";  // Page-specific CSS
-import enableNavigation from "./navigation.mjs";
-
-import { getParkData, getParkAlerts, getParkVisitorCenters } from "./parkService.mjs";
-import { alertTemplate, visitorCenterTemplate, activityTemplate } from "./templates.mjs";
+import "../css/style.css";
+import "../css/conditions.css";
+import {
+  getParkData,
+  getParkAlerts,
+  getParkVisitorCenters
+} from "./parkService.mjs";
+import {
+  activityListTemplate,
+  alertTemplate,
+  visitorCenterTemplate
+} from "./templates.mjs";
 import setHeaderFooter from "./setHeaderFooter.mjs";
 
-// -----------------------------
-// Alerts
-// -----------------------------
 function setAlerts(alerts) {
-  const container = document.querySelector(".alerts > ul");
-  container.innerHTML = "";
+  const alertsContainer = document.querySelector(".alerts > ul");
+  alertsContainer.innerHTML = "";
   const html = alerts.map(alertTemplate);
-  container.insertAdjacentHTML("afterbegin", html.join(""));
+  alertsContainer.insertAdjacentHTML("afterbegin", html.join(""));
 }
 
-// -----------------------------
-// Visitor Centers
-// -----------------------------
 function setVisitorCenters(centers) {
-  const container = document.querySelector(".visitor details ul");
-  container.innerHTML = "";
+  const centersContainer = document.querySelector(".visitor ul");
   const html = centers.map(visitorCenterTemplate);
-  container.insertAdjacentHTML("afterbegin", html.join(""));
+  centersContainer.insertAdjacentHTML("afterbegin", html.join(""));
 }
 
-// -----------------------------
-// Activities
-// -----------------------------
 function setActivities(activities) {
-  const container = document.querySelector(".activities details ul");
-  container.innerHTML = "";
-  const html = activities.map(activityTemplate);
-  container.insertAdjacentHTML("afterbegin", html.join(""));
+  const activitiesContainer = document.querySelector(".activities ul");
+  const html = activityListTemplate(activities);
+  activitiesContainer.insertAdjacentHTML("afterbegin", html);
 }
 
-// -----------------------------
-// Initialize Page
-// -----------------------------
 async function init() {
   const parkData = await getParkData();
-  setHeaderFooter(parkData);
-
   const alerts = await getParkAlerts(parkData.parkCode);
-  setAlerts(alerts);
-
   const visitorCenters = await getParkVisitorCenters(parkData.parkCode);
+  setHeaderFooter(parkData);
+  setAlerts(alerts);
   setVisitorCenters(visitorCenters);
-
-  setActivities(parkData.activities); // Already in parkData
+  setActivities(parkData.activities);
 }
 
 init();
-
-enableNavigation();

@@ -1,5 +1,6 @@
 // setHeaderFooter.mjs
-import { parkInfoTemplate, footerTemplate } from "./templates.mjs";
+import { footerTemplate, parkInfoTemplate } from "./templates.mjs";
+
 
 function setHeaderInfo(data) {
   const disclaimer = document.querySelector(".disclaimer > a");
